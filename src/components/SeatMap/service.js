@@ -209,4 +209,38 @@ export class JetsSeatMapService {
   findPassengerBySeatNumber = (passengers, seatNumber) => {
     return passengers.find(passenger => passenger.seat?.seatLabel === seatNumber);
   };
+
+  /**
+   * Checks the existence of seats with the provided labels and returns lists of existing and non-existing seat labels.
+   *
+   * @param { Array<string> } seatLabels - Array of seat labels.
+   * @param { Array<Object> } decks - The data containing the info about seats / rows / decks.
+   * @returns { Object } An object containing arrays of existing (if found) and non-existing (if not found) seat labels.
+   * @property { Array<string> } existingSeatLabels - Array of seat labels that exist in the provided plane data.
+   * @property { Array<string> } nonExistingSeatLabels - Array of seat labels that doesn't exist in the provided plane data.
+   */
+  compareWithDecksSeatsInfo = (seatLabels, decks) => {
+    if (!seatLabels || !decks) return;
+
+    const providedSeatLabels = seatLabels.map(seatLabel => seatLabel.toString().toUpperCase());
+
+    const deckSeatLabels = decks.flatMap(deck =>
+      deck?.rows?.flatMap(row =>
+        row?.seats?.filter(seat => seat?.type === ENTITY_TYPE_MAP.seat).map(seat => seat?.number?.toUpperCase())
+      )
+    );
+
+    return providedSeatLabels.reduce(
+      (acc, number) => {
+        if (deckSeatLabels.includes(number)) {
+          acc.existingSeatLabels.push(number);
+        } else {
+          acc.nonExistingSeatLabels.push(number);
+        }
+
+        return acc;
+      },
+      { existingSeatLabels: [], nonExistingSeatLabels: [] }
+    );
+  };
 }

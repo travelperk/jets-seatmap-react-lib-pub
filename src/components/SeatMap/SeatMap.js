@@ -78,6 +78,7 @@ export const JetsSeatMap = ({
   onLayoutUpdated,
   onSeatMouseLeave,
   onSeatMouseClick,
+  onAvailabilityApplied,
   componentOverrides,
 }) => {
   const colorTheme = JetsDataHelper.mergeColorThemeWithConstraints(
@@ -154,10 +155,17 @@ export const JetsSeatMap = ({
   }, [flight]);
 
   useEffect(() => {
+    if (!availability) return;
+
     const data = service.setAvailabilityHandler(content, availability);
+
+    const providedSeatLabels = availability.map(({ label }) => label);
+    const existingSeatsInfo = service.compareWithDecksSeatsInfo(providedSeatLabels, data);
+
     setPassengers();
     setContent(data);
     setActiveTooltip(null);
+    onAvailabilityApplied(existingSeatsInfo);
   }, [availability]);
 
   useEffect(() => {
@@ -499,5 +507,8 @@ JetsSeatMap.defaultProps = {
   },
   onSeatMouseClick: data => {
     console.log('Seat mouse click: ', data);
+  },
+  onAvailabilityApplied: data => {
+    console.log('Availability applied: ', data);
   },
 };
