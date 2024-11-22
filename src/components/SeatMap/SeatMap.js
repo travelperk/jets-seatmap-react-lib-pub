@@ -71,6 +71,7 @@ export const JetsSeatMap = ({
   passengers,
   config,
   currentDeckIndex,
+  seatJumpTo,
   onSeatMapInited,
   onSeatSelected,
   onSeatUnselected,
@@ -98,6 +99,7 @@ export const JetsSeatMap = ({
   const [isSeatMapInited, setSeatMapInited] = useState(false);
   const [passengersList, setPassengersList] = useState([]);
   const [activeTooltip, setActiveTooltip] = useState(null);
+  const [seatLabelJumpTo, setSeatLabelJumpTo] = useState(null);
   const [isSelectAvailable, setSelectAvailable] = useState(false);
   const [activeDeck, setActiveDeck] = useState(0);
   const [params, setParams] = useState(null);
@@ -190,6 +192,29 @@ export const JetsSeatMap = ({
   useEffect(() => {
     switchDeck(currentDeckIndex);
   }, [currentDeckIndex]);
+
+  useEffect(() => {
+    if (!seatJumpTo || !content?.length) return;
+
+    const _providedSeatLabel = seatJumpTo?.seatLabel?.toString().trim().toUpperCase();
+    const { nonExistingSeatLabels } = service.compareWithDecksSeatsInfo([_providedSeatLabel], content);
+
+    if (nonExistingSeatLabels.includes(_providedSeatLabel)) {
+      setActiveTooltip(null);
+      resetSeatJumpTo();
+      return;
+    }
+
+    const seatDeck = service.getDeckIndexBySeatLabel(_providedSeatLabel, content);
+
+    if (seatDeck !== activeDeck) switchDeck(seatDeck);
+
+    setSeatLabelJumpTo(_providedSeatLabel);
+  }, [seatJumpTo]);
+
+  const resetSeatJumpTo = () => {
+    setSeatLabelJumpTo(null);
+  };
 
   const scrollRTL = () => {
     if (params?.isHorizontal && params?.rightToLeft) {
@@ -379,10 +404,12 @@ export const JetsSeatMap = ({
     onSeatUnselect,
     isSeatSelectDisabled,
     switchDeck,
+    resetSeatJumpTo,
     params,
     config: configuration,
     colorTheme,
     activeTooltip,
+    seatLabelJumpTo,
     componentOverrides,
   };
 
