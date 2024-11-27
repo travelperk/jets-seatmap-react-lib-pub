@@ -22,6 +22,7 @@ import {
   JetsContext,
   ENTITY_STATUS_MAP,
   ENTITY_TYPE_MAP,
+  THEME_BACKGROUND_COLOR,
   THEME_DECK_LABEL_TITLE_COLOR,
   THEME_FLOOR_COLOR,
   THEME_SEAT_LABEL_COLOR,
@@ -422,6 +423,7 @@ export const JetsSeatMap = ({
           width: configuration.horizontal ? params?.scaledTotalDecksHeight : configuration.width,
           height: configuration.horizontal ? configuration.width : params?.scaledTotalDecksHeight,
           fontFamily: colorTheme.fontFamily,
+          background: colorTheme.seatMapBackgroundColor,
         }}
       >
         {activeTooltip && <JetsTooltipGlobal data={activeTooltip} />}
@@ -463,6 +465,8 @@ JetsSeatMap.defaultProps = {
     scaleType: DEFAULT_SCALE_TYPE,
     hiddenSeatFeatures: [],
     colorTheme: {
+      seatMapBackgroundColor: THEME_BACKGROUND_COLOR,
+
       deckLabelTitleColor: THEME_DECK_LABEL_TITLE_COLOR,
       floorColor: THEME_FLOOR_COLOR,
 
