@@ -1,8 +1,8 @@
-const FLIGHT_MOCK = {
+const FLIGHT_MOCK0 = {
   id: '111',
   airlineCode: 'DL',
   flightNo: '695',
-  departureDate: '2024-12-21',
+  departureDate: '2025-07-21',
   departure: 'BOS',
   arrival: 'ATL',
   cabinClass: 'A',
@@ -12,21 +12,21 @@ const FLIGHT_MOCK1 = {
   id: '1111',
   airlineCode: 'UA',
   flightNo: '1482',
-  departureDate: '2024-12-25',
+  departureDate: '2025-10-25',
   departure: 'EWR',
   arrival: 'FLL',
   cabinClass: 'E',
   passengerType: 'ADT',
 };
 
-const FLIGHT_MOCK2 = {
+const FLIGHT_MOCK = {
   id: '1111',
   airlineCode: 'EK',
   flightNo: '2',
-  departureDate: '2024-12-19',
+  departureDate: '2025-07-19',
   departure: 'LHR',
   arrival: 'DXB',
-  cabinClass: 'B',
+  cabinClass: 'A',
   passengerType: 'ADT',
 };
 
