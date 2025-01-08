@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Kwiket/jets-seatmap-react-lib.git"
+    "url": "git+https://github.com/Kwiket/jets-seatmap-react-lib-pub.git"
   },
   "author": "kwiket",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/Kwiket/jets-seatmap-react-lib/issues"
+    "url": "https://github.com/Kwiket/jets-seatmap-react-lib-pub/issues"
   },
-  "homepage": "https://github.com/Kwiket/jets-seatmap-react-lib#readme",
+  "homepage": "https://github.com/Kwiket/jets-seatmap-react-lib-pub#readme",
   "devDependencies": {
     "@babel/core": "^7.17.9",
     "@babel/plugin-transform-nullish-coalescing-operator": "^7.24.1",
