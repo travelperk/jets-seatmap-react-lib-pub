@@ -30,7 +30,7 @@ export class JetsSeatMapService {
     const activePassenger = passengers?.find(item => item.seat?.seatLabel);
     if (passengers && activePassenger) content = this.setPassengersHandler(content, passengers);
 
-    return { content, params, exits, bulks };
+    return { content, params, exits, bulks, availabilityData: planeFeatures?.availabilityData };
   };
 
   selectSeatHandler = (content, seat, passengersList) => {
