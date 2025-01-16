@@ -4,6 +4,8 @@ import {
   FUSELAGE_HEIGHT_TO_WIDTH_RATIO,
   ENTITY_TYPE_MAP,
   SCALE_TYPES,
+  DEFAULT_LANG,
+  LOCALES_MAP,
 } from './constants';
 
 export class JetsDataHelper {
@@ -220,6 +222,14 @@ export class JetsDataHelper {
   static validateColor(strColor, defaultColor) {
     return this._isColor(strColor) ? strColor : defaultColor;
   }
+
+  static validateLanguage = lang => {
+    if (!lang) return DEFAULT_LANG;
+
+    const _lang = lang.toUpperCase();
+
+    return LOCALES_MAP[_lang] ? _lang : DEFAULT_LANG;
+  };
 
   static _isColor(strColor) {
     const s = new Option().style;
