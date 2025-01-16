@@ -10,10 +10,10 @@ import { JetsDataHelper } from '../../common/data-helper';
 
 export class JetsSeatMapService {
   constructor(configuration) {
-    const { apiUrl, apiAppId, apiKey, colorTheme } = configuration;
+    const { apiUrl, apiAppId, apiKey, colorTheme, apiAuthorizationScheme } = configuration;
 
     const localStorage = new JetsLocalStorageService();
-    this._api = new JetsSeatMapApiService(apiAppId, apiKey, apiUrl, localStorage);
+    this._api = new JetsSeatMapApiService(apiAppId, apiKey, apiUrl, localStorage, apiAuthorizationScheme);
     this._preparer = new JetsContentPreparer();
     this._colorTheme = colorTheme;
     this._configuration = configuration;

@@ -1,12 +1,15 @@
+import { DEFAULT_AUTHORIZATION_SCHEME } from './constants';
+
 const JWT_TOKEN = 'jetsJwtToken';
 const TOKEN_EXPIRATION_BUFFER_IN_MS = 300000;
 
 export class JetsApiService {
-  constructor(appId, key, url, localStorage) {
+  constructor(appId, key, url, localStorage, apiAuthorizationScheme = DEFAULT_AUTHORIZATION_SCHEME) {
     this._appId = appId;
     this._apiKey = key;
     this._apiUrl = url;
     this._localStorage = localStorage;
+    this._apiAuthorizationScheme = apiAuthorizationScheme;
   }
 
   getData = async (url, options = {}) => {
@@ -44,7 +47,7 @@ export class JetsApiService {
     return {
       headers: {
         'content-type': 'application/json',
-        authorization: `Bearer ${token}`,
+        authorization: `${this._apiAuthorizationScheme} ${token}`,
       },
     };
   };
@@ -52,7 +55,7 @@ export class JetsApiService {
   _getAuthRequestOptions = key => {
     return {
       headers: {
-        authorization: `Bearer ${key}`,
+        authorization: `${this._apiAuthorizationScheme} ${key}`,
       },
     };
   };
