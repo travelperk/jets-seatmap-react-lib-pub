@@ -1,5 +1,5 @@
-name: Test suit
-run-name: Running test suit 🚀
+name: Security scans
+run-name: Running security scan 🔐
 
 on:
   push:
@@ -8,11 +8,12 @@ on:
       - version-3
 
 jobs:
-  tests:
+  semgrep:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -22,10 +23,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Test build-lib
-        run: npm run build-lib
+      - name: Install Semgrep
+        run: pip install semgrep
 
-      - name: Run Jest tests
-        run: npm run test:ci
-
-
+      - name: Run Semgrep scan
+        run: |
+          semgrep --config=auto --error

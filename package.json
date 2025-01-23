@@ -44,6 +44,7 @@
     "@babel/plugin-transform-nullish-coalescing-operator": "^7.24.1",
     "@babel/plugin-transform-optional-chaining": "^7.24.1",
     "@babel/preset-react": "^7.16.7",
+    "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^13.2.1",
     "@storybook/addon-actions": "^6.5.15",
     "@storybook/addon-essentials": "^6.5.15",
@@ -79,5 +80,8 @@
   "peerDependencies": {
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
+  },
+  "dependencies": {
+    "dompurify": "^3.2.3"
   }
 }
