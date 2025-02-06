@@ -3,7 +3,7 @@ import { JetsContext, ENTITY_TYPE_MAP } from '../../common';
 import { SeatIcon } from './ui/SeatIcon';
 import { SeatPriceLabel } from './ui/SeatPriceLabel';
 
-import './index.css';
+import './JetsSeat.css';
 
 const PASSENGER_BADGE_SIZE_COEF = 0.8;
 
@@ -28,7 +28,7 @@ export const JetsSeat = ({ data }) => {
     currency,
   } = data;
   const { index, aisle } = ENTITY_TYPE_MAP;
-  const componentClassNames = `jets-seat jets-${type} jets-${status} jets-seat-r-${rotation}`;
+  const componentClassNames = `jets-seat jets-${type} jets-${status} ${!!rotation ? `jets-seat-r-${rotation}` : ''}`;
   const showSeatPriceLabel = price && config?.visibleSeatPriceLabels;
 
   const $component = useRef();
@@ -125,6 +125,7 @@ export const JetsSeat = ({ data }) => {
       onClick={e => onSeatClick(data, $component, e)}
       onMouseEnter={params.tooltipOnHover ? e => showTooltip(data, $component, e) : null}
       onMouseLeave={params.tooltipOnHover ? e => onMouseLeave(data, $component, e) : null}
+      data-testid="jets-seat"
     >
       {seatType && type !== index ? (
         <>
@@ -140,7 +141,9 @@ export const JetsSeat = ({ data }) => {
           )}
         </>
       ) : (
-        <div style={indexContentStyle}>{getSeatContent()}</div>
+        <div style={indexContentStyle} data-testid="jets-seat-index">
+          {getSeatContent()}
+        </div>
       )}
     </div>
   );
