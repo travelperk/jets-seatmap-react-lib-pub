@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useMemo } from 'react';
+import React, { useEffect, useRef, useState, useMemo, useContext } from 'react';
 
 import { JetsSeatMapService } from './service';
 import { JetsDataHelper } from '../../common/data-helper';
@@ -439,6 +439,7 @@ export const JetsSeatMap = ({
           fontFamily: colorTheme.fontFamily,
           background: colorTheme.seatMapBackgroundColor,
         }}
+        data-testid="jets-seat-map"
       >
         {activeTooltip && <ResolvedTooltip data={activeTooltip} />}
         {shouldShowBuiltInDeckSelector && <JetsDeckSelector direction={!!activeDeck}></JetsDeckSelector>}
