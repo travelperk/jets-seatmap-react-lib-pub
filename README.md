@@ -1,3 +1,5 @@
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/Kwiket/jets-seatmap-react-lib-pub/badge)](https://scorecard.dev/viewer/?uri=github.com/Kwiket/jets-seatmap-react-lib-pub)
+
 # Seatmap integration and communication
 
 This document describes how to integrate JetsSeatMap lib (further "seatmap") into any React.js application. Also,
