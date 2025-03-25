@@ -24,7 +24,7 @@ export const JetsSeat = ({ data }) => {
     leftOffset,
     number,
     price,
-    cost,
+    priceValue,
     currency,
   } = data;
   const { index, aisle } = ENTITY_TYPE_MAP;
@@ -131,7 +131,7 @@ export const JetsSeat = ({ data }) => {
     >
       {seatType && type !== index ? (
         <>
-          {showSeatPriceLabel && <SeatPriceLabel cost={cost} currency={currency} maxWidth={size.width} />}
+          {showSeatPriceLabel && <SeatPriceLabel priceValue={priceValue} currency={currency} maxWidth={size.width} />}
           <div className={`jets-seat-number ST-${seatIconType}`}>{`${number}`}</div>
           <SeatIcon seatType={seatType} style={svgStyle} />
           {passenger && (

@@ -583,6 +583,9 @@ interface ISeatData {
   classCode: string;                // short for classType
   rowName: string;                  // if rows inside current cabin class have special marks - it would be here ("World Traveller" as an example)
   seatType: string;                 // format is "classCode-number", number indicates specific code of a seat in class
+  currency: string;                 // currency symbol or code
+  price: string;                    // represents a string of the following format: `${currency} ${priceValue}`
+  priceValue: number;               // price amount in numbers
 }
 
 interface ISeatFeature {
@@ -623,8 +626,10 @@ interface IPassenger {
 }
 
 interface ISeat {
-  price: number;
+  price: string;
   seatLabel: string;
+  priceValue: number;
+  currency: string;
 }
 ```
 
@@ -644,8 +649,10 @@ interface IPassenger {
 }
 
 interface ISeat {
-  price: number;
+  price: string;
   seatLabel: string;
+  priceValue: number;
+  currency: string;
 }
 ```
 
