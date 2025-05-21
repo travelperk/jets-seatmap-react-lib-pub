@@ -35,20 +35,6 @@ export class JetsSeatMapService {
     return { content, params, exits, bulks, availabilityData: planeFeatures?.availabilityData };
   };
 
-  getSeatMapData = async (flight, availability, passengers, config) => {
-    const { lang, units } = config;
-    const planeFeatures = await this._api.getPlaneFeatures(flight, lang, units);
-
-    let { content, params, exits, bulks } = this._preparer.prepareData(planeFeatures, config);
-
-    if (availability) content = this.setAvailabilityHandler(content, availability);
-
-    const activePassenger = passengers?.find(item => item.seat?.seatLabel);
-    if (passengers && activePassenger) content = this.setPassengersHandler(content, passengers);
-
-    return { content, params, exits, bulks, availabilityData: planeFeatures?.availabilityData };
-  };
-
   selectSeatHandler = (content, seat, passengersList) => {
     const nextPassenger = this.getNextPassenger(passengersList);
     const passengers = passengersList.map(passenger => {
