@@ -297,6 +297,72 @@ describe('JetsSeatMap', () => {
     });
   });
 
+  describe('when configuration.width changes', () => {
+    it('should call processPlaneFeatures again with the new width', async () => {
+      const flight = flightDetails();
+      const seatAvailability = [availability()];
+      const passengers = [passenger()];
+      const params = paramsData();
+
+      const planeFeatures = { some: 'planeFeatures' };
+      const seatMapData = {
+        params,
+        content: [],
+        exits: [[]],
+        bulks: [[]],
+        availabilityData: seatAvailability,
+      };
+
+      const mockGetPlaneFeatures = jest.fn().mockResolvedValue(planeFeatures);
+      const mockProcessPlaneFeatures = jest.fn().mockResolvedValue(seatMapData);
+      JetsSeatMapService.prototype.getPlaneFeatures = mockGetPlaneFeatures;
+      JetsSeatMapService.prototype.processPlaneFeatures = mockProcessPlaneFeatures;
+
+      const initialWidth = 600;
+      const updatedWidth = 900;
+
+      const { rerender } = setup({
+        flight,
+        availability: seatAvailability,
+        passengers: passengers,
+        currentDeckIndex: 0,
+        configOverrides: { width: initialWidth },
+      });
+
+      await waitFor(() => {
+        expect(mockGetPlaneFeatures).toHaveBeenCalledTimes(1);
+        expect(mockProcessPlaneFeatures).toHaveBeenCalledTimes(1);
+        expect(mockProcessPlaneFeatures).toHaveBeenCalledWith(
+          planeFeatures,
+          seatAvailability,
+          passengers,
+          expect.objectContaining({ width: initialWidth })
+        );
+      });
+
+      rerender(
+        <JetsSeatMap
+          flight={flight}
+          availability={seatAvailability}
+          passengers={passengers}
+          currentDeckIndex={0}
+          config={{ ...CONFIG_MOCK, width: updatedWidth }}
+        />
+      );
+
+      await waitFor(() => {
+        expect(mockGetPlaneFeatures).toHaveBeenCalledTimes(1);
+        expect(mockProcessPlaneFeatures).toHaveBeenCalledTimes(2);
+        expect(mockProcessPlaneFeatures).toHaveBeenLastCalledWith(
+          planeFeatures,
+          seatAvailability,
+          passengers,
+          expect.objectContaining({ width: updatedWidth })
+        );
+      });
+    });
+  });
+
   describe('when the seat map is called with valid flight data', () => {
     it('should render seat for a single-deck configuration', async () => {
       const planeFeatures = { some: 'planeFeatures' };
