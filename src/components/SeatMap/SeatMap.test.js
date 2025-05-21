@@ -38,11 +38,12 @@ const setup = ({
 describe('JetsSeatMap', () => {
   beforeEach(() => {
     JetsSeatMapService.prototype = {
-      getSeatMapData: jest.fn(),
-      addAbbrToPassengers: jest.fn(),
+      getPlaneFeatures: jest.fn(),
+      processPlaneFeatures: jest.fn(),
       setPassengersHandler: jest.fn(),
       setAvailabilityHandler: jest.fn(),
       compareWithDecksSeatsInfo: jest.fn(),
+      addAbbrToPassengers: jest.fn(passengers => passengers),
     };
   });
 
@@ -54,6 +55,7 @@ describe('JetsSeatMap', () => {
       const params = paramsData();
 
       const availabilityData = seatAvailability;
+      const planeFeatures = { some: 'planeFeatures' };
       const seatMapData = {
         params,
         content: [],
@@ -63,8 +65,10 @@ describe('JetsSeatMap', () => {
       };
 
       const mockOnSeatMapInited = jest.fn();
-      const mockGetSeatMapData = jest.fn().mockResolvedValue(seatMapData);
-      JetsSeatMapService.prototype.getSeatMapData = mockGetSeatMapData;
+      const mockGetPlaneFeatures = jest.fn().mockResolvedValue(planeFeatures);
+      const mockProcessPlaneFeatures = jest.fn().mockResolvedValue(seatMapData);
+      JetsSeatMapService.prototype.getPlaneFeatures = mockGetPlaneFeatures;
+      JetsSeatMapService.prototype.processPlaneFeatures = mockProcessPlaneFeatures;
 
       setup({
         flight,
@@ -76,8 +80,13 @@ describe('JetsSeatMap', () => {
 
       await waitFor(() => {
         expect(screen.queryByTestId('jets-seat-map')).toBeInTheDocument();
-        expect(mockGetSeatMapData).toHaveBeenCalledWith(
+        expect(mockGetPlaneFeatures).toHaveBeenCalledWith(
           flight,
+          expect.any(String), // not testing it was called with certain config
+          expect.any(String) // not testing it was called with certain config
+        );
+        expect(mockProcessPlaneFeatures).toHaveBeenCalledWith(
+          planeFeatures,
           seatAvailability,
           passengers,
           expect.any(Object) // not testing it was called with certain config
@@ -112,8 +121,10 @@ describe('JetsSeatMap', () => {
 
     it('should initialize the seat map with an error if an error occurred when getting seat map data', async () => {
       const mockOnSeatMapInited = jest.fn();
-      const mockGetSeatMapData = jest.fn().mockRejectedValue(new Error('An error occurred'));
-      JetsSeatMapService.prototype.getSeatMapData = mockGetSeatMapData;
+      const mockGetPlaneFeatures = jest.fn().mockRejectedValue(new Error('An error occurred'));
+      const mockProcessPlaneFeatures = jest.fn();
+      JetsSeatMapService.prototype.getPlaneFeatures = mockGetPlaneFeatures;
+      JetsSeatMapService.prototype.processPlaneFeatures = mockProcessPlaneFeatures;
 
       setup({
         flight: flightDetails(),
@@ -133,16 +144,17 @@ describe('JetsSeatMap', () => {
           currentDeckIndex: undefined,
           error: 'An error occurred',
         });
+        expect(mockProcessPlaneFeatures).not.toHaveBeenCalled();
       });
     });
   });
 
   describe('when the seat map is passed valid config and params', () => {
     it('should render the wings if visibleWings is set to true in params', async () => {
+      const params = paramsData({ visibleWings: true });
+      const planeFeatures = { some: 'planeFeatures' };
       const seatMapDataForOneDeck = {
-        params: paramsData({
-          visibleWings: true,
-        }),
+        params,
         content: [
           finalDeck({
             rows: [
@@ -159,7 +171,8 @@ describe('JetsSeatMap', () => {
         exits: [[]],
         bulks: [[]],
       };
-      JetsSeatMapService.prototype.getSeatMapData = jest.fn().mockResolvedValue(seatMapDataForOneDeck);
+      JetsSeatMapService.prototype.getPlaneFeatures = jest.fn().mockResolvedValue(planeFeatures);
+      JetsSeatMapService.prototype.processPlaneFeatures = jest.fn().mockResolvedValue(seatMapDataForOneDeck);
 
       setup({
         flight: flightDetails(),
@@ -174,10 +187,10 @@ describe('JetsSeatMap', () => {
     });
 
     it('should not render the wings if visibleWings is set to false in params', async () => {
+      const params = paramsData({ visibleWings: false });
+      const planeFeatures = { some: 'planeFeatures' };
       const seatMapDataForOneDeck = {
-        params: paramsData({
-          visibleWings: false,
-        }),
+        params,
         content: [
           finalDeck({
             rows: [
@@ -194,7 +207,8 @@ describe('JetsSeatMap', () => {
         exits: [[]],
         bulks: [[]],
       };
-      JetsSeatMapService.prototype.getSeatMapData = jest.fn().mockResolvedValue(seatMapDataForOneDeck);
+      JetsSeatMapService.prototype.getPlaneFeatures = jest.fn().mockResolvedValue(planeFeatures);
+      JetsSeatMapService.prototype.processPlaneFeatures = jest.fn().mockResolvedValue(seatMapDataForOneDeck);
 
       setup({
         flight: flightDetails(),
@@ -209,6 +223,7 @@ describe('JetsSeatMap', () => {
     });
 
     it('should render the nose and tail of the plane if visibleFuselage is set to true in config', async () => {
+      const planeFeatures = { some: 'planeFeatures' };
       const seatMapDataForOneDeck = {
         params: paramsData(),
         content: [
@@ -227,7 +242,8 @@ describe('JetsSeatMap', () => {
         exits: [[]],
         bulks: [[]],
       };
-      JetsSeatMapService.prototype.getSeatMapData = jest.fn().mockResolvedValue(seatMapDataForOneDeck);
+      JetsSeatMapService.prototype.getPlaneFeatures = jest.fn().mockResolvedValue(planeFeatures);
+      JetsSeatMapService.prototype.processPlaneFeatures = jest.fn().mockResolvedValue(seatMapDataForOneDeck);
 
       setup({
         flight: flightDetails(),
@@ -244,6 +260,7 @@ describe('JetsSeatMap', () => {
     });
 
     it('should not render the nose and tail of the plane if visibleFuselage is set to false in config', async () => {
+      const planeFeatures = { some: 'planeFeatures' };
       const seatMapDataForOneDeck = {
         params: paramsData(),
         content: [
@@ -262,7 +279,8 @@ describe('JetsSeatMap', () => {
         exits: [[]],
         bulks: [[]],
       };
-      JetsSeatMapService.prototype.getSeatMapData = jest.fn().mockResolvedValue(seatMapDataForOneDeck);
+      JetsSeatMapService.prototype.getPlaneFeatures = jest.fn().mockResolvedValue(planeFeatures);
+      JetsSeatMapService.prototype.processPlaneFeatures = jest.fn().mockResolvedValue(seatMapDataForOneDeck);
 
       setup({
         flight: flightDetails(),
@@ -281,6 +299,7 @@ describe('JetsSeatMap', () => {
 
   describe('when the seat map is called with valid flight data', () => {
     it('should render seat for a single-deck configuration', async () => {
+      const planeFeatures = { some: 'planeFeatures' };
       const seatMapDataForOneDeck = {
         params: paramsData(),
         content: [
@@ -300,7 +319,8 @@ describe('JetsSeatMap', () => {
         bulks: [[]],
       };
 
-      JetsSeatMapService.prototype.getSeatMapData = jest.fn().mockResolvedValue(seatMapDataForOneDeck);
+      JetsSeatMapService.prototype.getPlaneFeatures = jest.fn().mockResolvedValue(planeFeatures);
+      JetsSeatMapService.prototype.processPlaneFeatures = jest.fn().mockResolvedValue(seatMapDataForOneDeck);
 
       setup({
         flight: flightDetails(),
@@ -318,6 +338,7 @@ describe('JetsSeatMap', () => {
     });
 
     it('should render seat availability for a single-deck configuration', async () => {
+      const planeFeatures = { some: 'planeFeatures' };
       const seatMapDataForOneDeck = {
         params: paramsData(),
         content: [
@@ -342,7 +363,8 @@ describe('JetsSeatMap', () => {
         bulks: [[]],
       };
 
-      JetsSeatMapService.prototype.getSeatMapData = jest.fn().mockResolvedValue(seatMapDataForOneDeck);
+      JetsSeatMapService.prototype.getPlaneFeatures = jest.fn().mockResolvedValue(planeFeatures);
+      JetsSeatMapService.prototype.processPlaneFeatures = jest.fn().mockResolvedValue(seatMapDataForOneDeck);
 
       setup({
         flight: flightDetails(),
@@ -367,6 +389,7 @@ describe('JetsSeatMap', () => {
     });
 
     it('should render seat passengers for a single-deck configuration', async () => {
+      const planeFeatures = { some: 'planeFeatures' };
       const seatMapDataForOneDeck = {
         params: paramsData(),
         content: [
@@ -405,7 +428,8 @@ describe('JetsSeatMap', () => {
       };
       seatMapDataForOneDeckWithAllData.content[0].rows[0].seats[0].status = 'selected';
       seatMapDataForOneDeckWithAllData.content[0].rows[0].seats[0].passenger = mockPassengerWithAbbr;
-      JetsSeatMapService.prototype.getSeatMapData = jest.fn().mockResolvedValue(seatMapDataForOneDeckWithAllData);
+      JetsSeatMapService.prototype.getPlaneFeatures = jest.fn().mockResolvedValue(planeFeatures);
+      JetsSeatMapService.prototype.processPlaneFeatures = jest.fn().mockResolvedValue(seatMapDataForOneDeckWithAllData);
 
       setup({
         flight: flightDetails(),
@@ -424,6 +448,7 @@ describe('JetsSeatMap', () => {
     });
 
     it('should render seat for a double-deck configuration, lower deck chosen', async () => {
+      const planeFeatures = { some: 'planeFeatures' };
       const seatMapDataForOneDeck = {
         params: paramsData(),
         content: [
@@ -458,8 +483,8 @@ describe('JetsSeatMap', () => {
         bulks: [[]],
       };
 
-      const mockGetSeatMapData = jest.fn().mockResolvedValue(seatMapDataForOneDeck);
-      JetsSeatMapService.prototype.getSeatMapData = mockGetSeatMapData;
+      JetsSeatMapService.prototype.getPlaneFeatures = jest.fn().mockResolvedValue(planeFeatures);
+      JetsSeatMapService.prototype.processPlaneFeatures = jest.fn().mockResolvedValue(seatMapDataForOneDeck);
 
       setup({
         flight: flightDetails(),
@@ -480,6 +505,7 @@ describe('JetsSeatMap', () => {
     });
 
     it('should render seat for a double-deck configuration, upper deck chosen', async () => {
+      const planeFeatures = { some: 'planeFeatures' };
       const seatMapDataForTwoDecks = {
         params: paramsData(),
         content: [
@@ -514,8 +540,8 @@ describe('JetsSeatMap', () => {
         bulks: [[]],
       };
 
-      const mockGetSeatMapData = jest.fn().mockResolvedValue(seatMapDataForTwoDecks);
-      JetsSeatMapService.prototype.getSeatMapData = mockGetSeatMapData;
+      JetsSeatMapService.prototype.getPlaneFeatures = jest.fn().mockResolvedValue(planeFeatures);
+      JetsSeatMapService.prototype.processPlaneFeatures = jest.fn().mockResolvedValue(seatMapDataForTwoDecks);
 
       setup({
         flight: flightDetails(),
@@ -536,6 +562,7 @@ describe('JetsSeatMap', () => {
     });
 
     it('should render bulks and exists', async () => {
+      const planeFeatures = { some: 'planeFeatures' };
       const seatMapDataForOneDeck = {
         params: paramsData(),
         content: [finalDeck()],
@@ -543,7 +570,8 @@ describe('JetsSeatMap', () => {
         bulks: [[bulk()]],
       };
 
-      JetsSeatMapService.prototype.getSeatMapData = jest.fn().mockResolvedValue(seatMapDataForOneDeck);
+      JetsSeatMapService.prototype.getPlaneFeatures = jest.fn().mockResolvedValue(planeFeatures);
+      JetsSeatMapService.prototype.processPlaneFeatures = jest.fn().mockResolvedValue(seatMapDataForOneDeck);
 
       setup({
         flight: flightDetails(),

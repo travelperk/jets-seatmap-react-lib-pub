@@ -19,6 +19,22 @@ export class JetsSeatMapService {
     this._configuration = configuration;
   }
 
+  getPlaneFeatures = async (flight, lang, units) => {
+    const planeFeatures = await this._api.getPlaneFeatures(flight, lang, units);
+    return planeFeatures;
+  };
+
+  processPlaneFeatures = async (planeFeatures, availability, passengers, config) => {
+    let { content, params, exits, bulks } = this._preparer.prepareData(planeFeatures, config);
+
+    if (availability) content = this.setAvailabilityHandler(content, availability);
+
+    const activePassenger = passengers?.find(item => item.seat?.seatLabel);
+    if (passengers && activePassenger) content = this.setPassengersHandler(content, passengers);
+
+    return { content, params, exits, bulks, availabilityData: planeFeatures?.availabilityData };
+  };
+
   getSeatMapData = async (flight, availability, passengers, config) => {
     const { lang, units } = config;
     const planeFeatures = await this._api.getPlaneFeatures(flight, lang, units);
