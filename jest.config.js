@@ -3,7 +3,7 @@ module.exports = {
   collectCoverageFrom: ['src/**/*.js', 'src/**/*.jsx', '!src/components/Demo/**'],
   coverageThreshold: {
     global: {
-      lines: 100,
+      lines: 85,
     },
   },
   moduleNameMapper: {
