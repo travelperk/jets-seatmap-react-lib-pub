@@ -244,8 +244,34 @@ export class JetsDataHelper {
       merged[k] = _colorThemeConstraints[k](merged[k]);
     }
 
+    merged.customSeatColorRanges = this._applyColorRangesConstraints(merged.customSeatColorRanges);
+
     return merged;
   };
+
+  static _applyColorRangesConstraints(colorRanges) {
+    if (!Array.isArray(colorRanges) || !colorRanges.length) {
+      return [];
+    }
+
+    return colorRanges.filter(rangeItem => {
+      if (!rangeItem || !Array.isArray(rangeItem.range) || rangeItem.range.length !== 2) {
+        return false;
+      }
+
+      const [min, max] = rangeItem.range;
+
+      if (typeof min !== 'number' || typeof max !== 'number' || min > max) {
+        return false;
+      }
+
+      if (typeof rangeItem.color === 'string' && this._isColor(rangeItem.color)) {
+        return true;
+      }
+
+      return false;
+    });
+  }
 
   static _filterInvalidColors(theme) {
     Object.keys(theme).reduce((acc, key) => {
@@ -267,6 +293,20 @@ export class JetsDataHelper {
     }, {});
 
     return theme;
+  }
+
+  static calculateSeatColorByScore(score, colorRanges) {
+    if (typeof score !== 'number' || score < 1 || score > 10) {
+      return null;
+    }
+
+    const foundRange = colorRanges.find(rangeItem => {
+      const [min, max] = rangeItem.range;
+
+      return score >= min && score <= max;
+    });
+
+    return foundRange?.color || null;
   }
 }
 

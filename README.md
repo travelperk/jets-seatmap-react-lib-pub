@@ -457,6 +457,21 @@ The `full config` looks like this:
     cabinTitlesWidth: 80,
     cabinTitlesHighlightColors: { F: '#BDB76B', B: '#FF8C00', P: '#8FBC8F', E: '#1E90FF' },
     cabinTitlesLabelColor: '#00BFFF',
+
+    customSeatColorRanges: [                    // optional: define color ranges for seat scoring (1-10)
+      {
+        color: 'red',                           // CSS-compatible color value
+        range: [1, 3.99]                       // score range [min, max] (inclusive)
+      },
+      {
+        color: 'yellow',
+        range: [4, 7.99]
+      },
+      {
+        color: 'green',
+        range: [8, 10]
+      }
+    ],
   },
 };
 
@@ -473,6 +488,16 @@ To override exits, you need to set `both` fields in the config - `exitIconUrlLef
 ```
 
 If you will not pass `optional config params,` then the properties will be set with default values.
+
+The seatmap supports dynamic seat coloring based on score values. When a seat has a `score` field and `customSeatColorRanges` is defined in the colorTheme, the seat will be colored according to the score value.
+
+**Behavior:**
+- If seat has a `score` value and `customSeatColorRanges` is defined → seat is colored based on the first matching range
+- If no matching range found → falls back to the seat's original `color` property
+- Scores outside 1-10 range are ignored
+- Overlapping ranges use the first matching range
+
+**Priority order:** Score-based color > Original seat color > Default color
 
 &nbsp;
 
@@ -515,6 +540,34 @@ interface IAvailableSeatsData {
 ```
 
 ```typescript
+interface IMediaData {
+  photoData: IPhotoData[];
+  panoData: IPanoData[];
+}
+
+interface IPhotoData {
+  file: string;
+  thumb: string;
+  size: ISize;
+  thumbSize: ISize;
+  description: string;
+}
+
+interface IPanoData {
+  file: string;
+  rawFile: string;
+  thumb: string;
+  thumbSize: ISize;
+  description: string;
+}
+
+interface ISize {
+  w: number;
+  h: number;
+}
+```
+
+```typescript
 interface IInitialLayoutData {
   availabilityData: IAvailableSeatsData;     // reflects what seats are available for passengers
   currentDeckIndex: number;     // shows current deck if "builtInDeckSelector" flag is set in config, otherwise 0
@@ -522,6 +575,7 @@ interface IInitialLayoutData {
   heightInPx: number;           // sum of lengths of all elements of the plane (decks, fuselage, separators) using internal units. Multiply by "scaleFactor" to get real pixel value on screen
   scaleFactor: number;          // scale applied to fit into provided boundaries
   widthInPx: number;            // outer width of the plane. CAUTION: if "horizontal" flag is set - height and width are swapped around to reflect that
+  media: IMediaData;            // contains media data for the aircraft cabin
   error: string;                // error message if not possible to build a seat map
 }
 ```
