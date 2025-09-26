@@ -4,13 +4,13 @@ import userEvent from '@testing-library/user-event';
 
 import { MockJetsContextProvider } from '../../__mocks__/MockJetsContext';
 
-import { seatDataFirst } from './__fixtures__';
+import { paramsData, seatDataFirst } from './__fixtures__';
 import { JetsSeat } from './index';
 
 const setup = ({ data = {}, config = {}, params = {}, events = {} } = {}) => ({
   user: userEvent.setup(),
   ...render(
-    <MockJetsContextProvider config={config} events={events} params={params}>
+    <MockJetsContextProvider config={config} events={events} params={{ ...paramsData(params) }}>
       <JetsSeat data={data} />
     </MockJetsContextProvider>
   ),
@@ -75,7 +75,7 @@ describe('JetsSeat', () => {
       const { user } = setup({
         data: seatDataFirst(),
         events: { onTooltipClose, showTooltip },
-        config: { tooltipOnHover: true },
+        params: { tooltipOnHover: true },
       });
 
       const wrapper = screen.getByText(/1A/);

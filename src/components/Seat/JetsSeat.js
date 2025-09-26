@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { JetsContext, ENTITY_TYPE_MAP, JetsDataHelper } from '../../common';
+import { JetsContext, ENTITY_TYPE_MAP } from '../../common';
 import { SeatIcon } from './ui/SeatIcon';
 import { SeatPriceLabel } from './ui/SeatPriceLabel';
 
@@ -26,12 +26,10 @@ export const JetsSeat = ({ data }) => {
     price,
     priceValue,
     currency,
-    score,
   } = data;
   const { index, aisle } = ENTITY_TYPE_MAP;
   const componentClassNames = `jets-seat jets-${type} jets-${status} ${!!rotation ? `jets-seat-r-${rotation}` : ''}`;
   const showSeatPriceLabel = price && config?.visibleSeatPriceLabels;
-  const seatColor = JetsDataHelper.calculateSeatColorByScore(score, colorTheme.customSeatColorRanges) || color;
 
   const $component = useRef();
 
@@ -72,7 +70,7 @@ export const JetsSeat = ({ data }) => {
   const svgStyle = {
     strokeColor: colorTheme.seatStrokeColor,
     armrestColor: colorTheme.seatArmrestColor,
-    fillColor: seatColor,
+    fillColor: color,
     strokeWidth: colorTheme.seatStrokeWidth,
   };
 

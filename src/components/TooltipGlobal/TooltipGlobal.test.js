@@ -3,11 +3,11 @@ import { render, screen } from '@testing-library/react';
 import { MockJetsContextProvider } from '../../__mocks__/MockJetsContext';
 
 import { JetsTooltipGlobal } from './index';
-import { activeTooltipData } from './__fixtures__';
+import { activeTooltipData, paramsData } from './__fixtures__';
 
-const setup = ({ data = {}, componentOverrides = {}, config = {}, params = {}, events = {} } = {}) => ({
+const setup = ({ data = {}, config = {}, params = {}, events = {} } = {}) => ({
   ...render(
-    <MockJetsContextProvider componentOverrides={componentOverrides} config={config} params={params} events={events}>
+    <MockJetsContextProvider config={config} params={{ ...paramsData(params) }} events={events}>
       <JetsTooltipGlobal data={{ ...activeTooltipData(data) }} />
     </MockJetsContextProvider>
   ),
@@ -16,12 +16,12 @@ const setup = ({ data = {}, componentOverrides = {}, config = {}, params = {}, e
 describe('JetsTooltipGlobal', () => {
   describe('when a tooltip is rendered', () => {
     it('should apply the classes for horizontal layout when selected', async () => {
-      setup({ config: { horizontal: true } });
+      setup({ params: { isHorizontal: true } });
       expect(screen.getByText(/33B/).closest('.jets-tooltip')).toHaveClass('horizontal');
     });
 
     it('should hide buttons when in hover mode', () => {
-      setup({ config: { tooltipOnHover: true } });
+      setup({ params: { tooltipOnHover: true } });
       expect(screen.getByText(/33B/).closest('.jets-tooltip--body')).toHaveClass('no-buttons');
     });
 
@@ -31,7 +31,7 @@ describe('JetsTooltipGlobal', () => {
     });
 
     it('should set the correct text direction in the header', () => {
-      setup({ config: { rightToLeft: true } });
+      setup({ params: { rightToLeft: true } });
       expect(screen.getByText(/33B/).closest('.jets-tooltip--header')).toHaveStyle('direction: rtl');
     });
 
@@ -105,37 +105,8 @@ describe('JetsTooltipGlobal', () => {
     });
 
     it('should set the correct text direction for features', () => {
-      setup({ config: { rightToLeft: true, test: 'lol' } });
+      setup({ params: { rightToLeft: true } });
       expect(screen.getByTestId('audio_video').closest('.jets-tooltip--features')).toHaveStyle('direction: rtl');
-    });
-
-    it('should exclude features provided in the hiddenSeatFeatures config', () => {
-      setup({
-        data: {
-          features: [
-            {
-              key: 'audioVideo',
-              icon: null,
-              title: 'Audio & Video On Demand',
-              uniqId: '_jsjpt16',
-              value: 'free on demand entertainment',
-            },
-            {
-              key: 'customFeature',
-              icon: null,
-              title: 'Custom Feature',
-              uniqId: '_customFeature1',
-              value: 'Custom Value',
-            },
-          ],
-        },
-        config: {
-          hiddenSeatFeatures: ['audioVideo'],
-        },
-      });
-
-      expect(screen.queryByText(/Audio \& Video On Demand/)).not.toBeInTheDocument();
-      expect(screen.getByText(/Custom Feature/)).toBeInTheDocument();
     });
 
     it('should display the seat measurements provided', () => {

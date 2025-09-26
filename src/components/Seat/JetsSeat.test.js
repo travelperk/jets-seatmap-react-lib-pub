@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { MockJetsContextProvider } from '../../__mocks__/MockJetsContext';
 
 import {
+  paramsData,
   seatDataFirst,
   seatDataBusiness,
   seatDataPremium,
@@ -15,7 +16,7 @@ import { JetsSeat } from './index';
 
 const setup = ({ data = {}, config = {}, params = {} } = {}) => ({
   ...render(
-    <MockJetsContextProvider config={config} params={params}>
+    <MockJetsContextProvider config={config} params={{ ...paramsData(params) }}>
       <JetsSeat data={data} />
     </MockJetsContextProvider>
   ),
@@ -252,8 +253,8 @@ describe('JetsSeat', () => {
 
     it('should apply the correct styles when in horizontal mode', () => {
       setup({
-        config: {
-          horizontal: true,
+        params: {
+          isHorizontal: true,
         },
         data: seatDataAisle(),
       });
@@ -390,8 +391,8 @@ describe('JetsSeat', () => {
 
     it('should apply the correct styles in horizontal mode', () => {
       setup({
-        config: {
-          horizontal: true,
+        params: {
+          isHorizontal: true,
         },
         data: seatDataFirst({
           passenger: {
@@ -408,7 +409,7 @@ describe('JetsSeat', () => {
 
     it('should apply the correct styles in horizontal and rtl mode', () => {
       setup({
-        config: {
+        params: {
           isHorizontal: true,
           rightToLeft: true,
         },
@@ -427,7 +428,7 @@ describe('JetsSeat', () => {
 
     it('should apply the correct styles in horizontal and rtl mode', () => {
       setup({
-        config: {
+        params: {
           isHorizontal: true,
           rightToLeft: true,
         },

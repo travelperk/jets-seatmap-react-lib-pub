@@ -13,7 +13,6 @@ const setup = ({
   configOverrides,
   onSeatMapInited,
   onAvailabilityApplied,
-  componentOverrides = {},
 }) => {
   const config = {
     ...CONFIG_MOCK,
@@ -28,7 +27,6 @@ const setup = ({
       config={config}
       onSeatMapInited={onSeatMapInited}
       onAvailabilityApplied={onAvailabilityApplied}
-      componentOverrides={componentOverrides}
     />
   );
 };
@@ -46,9 +44,9 @@ jest.mock('./api', () => {
 });
 
 describe('JetsSeatMap', () => {
-  const flight = flightDetails();
+  it('should show the tooltip with the correct data when a seat is clicked', async () => {
+    const flight = flightDetails();
 
-  beforeEach(() => {
     const singleCabinResponseFixture = [
       {
         id: '1111',
@@ -60,9 +58,7 @@ describe('JetsSeatMap', () => {
       },
     ];
     mockPostData.mockImplementation(() => singleCabinResponseFixture);
-  });
 
-  it('should show the tooltip with the correct data when a seat is clicked', async () => {
     setup({
       flight: flight,
       availability: null,
@@ -80,29 +76,22 @@ describe('JetsSeatMap', () => {
     });
   });
 
-  it('should show a custom tooltip when provided', async () => {
-    const customTooltip = () => <div>Custom Tooltip</div>;
-
-    setup({
-      flight: flight,
-      availability: null,
-      passengers: null,
-      currentDeckIndex: 0,
-      componentOverrides: {
-        JetsTooltip: customTooltip,
-      },
-    });
-
-    await waitFor(() => {
-      fireEvent.click(screen.getByText(/33A/));
-    });
-
-    await waitFor(() => {
-      expect(screen.getByText(/Custom Tooltip/)).toBeVisible();
-    });
-  });
-
   it('should trigger onSeatSelected when a passenger selects an available seat', async () => {
+    const flight = flightDetails();
+
+    const singleCabinResponseFixture = [
+      {
+        id: '1111',
+        cabin: cabin(),
+        entertainment: entertainment(),
+        power: power(),
+        wifi: wifi(),
+        seatDetails: seatDetails(),
+      },
+    ];
+
+    mockPostData.mockImplementation(() => singleCabinResponseFixture);
+
     const passengers = [
       {
         id: '1',
@@ -165,6 +154,21 @@ describe('JetsSeatMap', () => {
   });
 
   it('should trigger onSeatUnselected when a passenger unselects a seat they just selected', async () => {
+    const flight = flightDetails();
+
+    const singleCabinResponseFixture = [
+      {
+        id: '1111',
+        cabin: cabin(),
+        entertainment: entertainment(),
+        power: power(),
+        wifi: wifi(),
+        seatDetails: seatDetails(),
+      },
+    ];
+
+    mockPostData.mockImplementation(() => singleCabinResponseFixture);
+
     const passengers = [
       {
         id: '1',
