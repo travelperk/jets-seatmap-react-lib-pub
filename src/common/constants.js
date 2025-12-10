@@ -124,7 +124,7 @@ export const DEFAULT_FEATURES_RENDER_LIMIT = 12;
 // see this params in SVG
 // width="200" height="214" viewBox="0 0 200 214"
 // divide height/width for each and add them together (remember that actual clipping rect is viewBox, use its values when available)
-export const FUSELAGE_HEIGHT_TO_WIDTH_RATIO = 2.4;
+export const FUSELAGE_HEIGHT_TO_WIDTH_RATIO = 1.4;
 
 export const SEAT_MAP_WIDTH_TO_WINGS_WIDTH_RATIO = 4;
 
@@ -230,6 +230,8 @@ export const THEME_FUSELAGE_OUTLINE_WIDTH = 12;
 export const THEME_FUSELAGE_OUTLINE_COLOR = 'darkgrey';
 export const THEME_FUSELAGE_WINDOWS_COLOR = 'darkgrey';
 export const THEME_FUSELAGE_WINGS_COLOR = 'darkgrey';
+
+export const THEME_FUSELAGE_NOSE_TYPE_DEFAULT = 'default';
 
 export const THEME_DEFAULT_PASSENGER_BADGE_COLOR = '#1157ce';
 export const THEME_DEFAULT_PASSENGER_BADGE_LABEL_COLOR = 'rgb(255,255,255)';
