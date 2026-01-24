@@ -97,7 +97,8 @@
       "micromatch": "4.0.8",
       "postcss": "8.4.31",
       "tar": "7.5.4",
-      "trim": "0.0.3"
+      "trim": "0.0.3",
+      "trim-newlines": "3.0.1"
     }
   }
 }

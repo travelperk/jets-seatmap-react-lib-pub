@@ -13,6 +13,7 @@ overrides:
   postcss: 8.4.31
   tar: 7.5.4
   trim: 0.0.3
+  trim-newlines: 3.0.1
 
 importers:
 
@@ -5956,9 +5957,9 @@ packages:
     resolution: {integrity: sha512-l7FvfAHlcmulp8kr+flpQZmVwtu7nfRV7NZujtN0OqES8EL4O4e0qqzL0DC5gAvx/ZC/9lk6rhcUwYvkBnBnYA==}
     engines: {node: '>=12'}
 
-  trim-newlines@1.0.0:
-    resolution: {integrity: sha512-Nm4cF79FhSTzrLKGDMi3I4utBtFv8qKy4sq1enftf2gMdpqI8oVQTAfySkTz5r49giVzDj88SVZXP4CeYQwjaw==}
-    engines: {node: '>=0.10.0'}
+  trim-newlines@3.0.1:
+    resolution: {integrity: sha512-c1PTsA3tYrIsLGkJkzHF+w9F2EyxfXGo4UyJc4pFL++FMjnq0HJS69T3M7d//gKrFKwy429bouPescbjecU+Zw==}
+    engines: {node: '>=8'}
 
   trim-trailing-lines@1.1.4:
     resolution: {integrity: sha512-rjUWSqnfTNrjbB9NQWfPMH/xRK1deHeGsHoVfpxJ++XeYXE0d6B1En37AHfw3jtfTU7dzMzZL2jjpe8Qb5gLIQ==}
@@ -12392,7 +12393,7 @@ snapshots:
       object-assign: 4.1.1
       read-pkg-up: 1.0.1
       redent: 1.0.0
-      trim-newlines: 1.0.0
+      trim-newlines: 3.0.1
     optional: true
 
   merge-descriptors@1.0.3: {}
@@ -14233,7 +14234,7 @@ snapshots:
     dependencies:
       punycode: 2.3.1
 
-  trim-newlines@1.0.0:
+  trim-newlines@3.0.1:
     optional: true
 
   trim-trailing-lines@1.1.4: {}
