@@ -7,6 +7,7 @@ nodeLinker: hoisted
 
 minimumReleaseAge: 20160 # 20 days
 minimumReleaseAgeExclude:
+  - "babel-traverse@6.26.0"
 
 # pnpm v10 can block install scripts unless explicitly allowed.
 allowBuilds:

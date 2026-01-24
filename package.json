@@ -53,6 +53,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.17.9",
+    "@babel/plugin-transform-class-properties": "^7.27.0",
     "@babel/plugin-transform-nullish-coalescing-operator": "^7.24.1",
     "@babel/plugin-transform-optional-chaining": "^7.24.1",
     "@babel/preset-react": "^7.16.7",
@@ -73,7 +74,6 @@
     "babel-plugin-inline-dotenv": "^1.7.0",
     "babel-plugin-search-and-replace": "^1.1.0",
     "babel-plugin-styled-components": "^2.1.4",
-    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-react-app": "^10.0.1",
     "husky": "^9.1.7",
     "identity-obj-proxy": "^3.0.0",
@@ -93,7 +93,8 @@
   },
   "pnpm": {
     "overrides": {
-      "@babel/runtime": "7.26.10"
+      "@babel/runtime": "7.26.10",
+      "@babel/traverse": "7.23.2"
     }
   }
 }
