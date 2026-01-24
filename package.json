@@ -95,7 +95,8 @@
       "braces": "3.0.3",
       "lodash": "4.17.23",
       "micromatch": "4.0.8",
-      "postcss": "8.4.31"
+      "postcss": "8.4.31",
+      "tar": "7.5.4"
     }
   }
 }
