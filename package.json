@@ -94,7 +94,8 @@
       "@babel/traverse": "7.28.5",
       "braces": "3.0.3",
       "lodash": "4.17.23",
-      "micromatch": "4.0.8"
+      "micromatch": "4.0.8",
+      "postcss": "8.4.31"
     }
   }
 }
