@@ -92,7 +92,8 @@
     "overrides": {
       "@babel/runtime": "7.26.10",
       "@babel/traverse": "7.28.5",
-      "braces": "3.0.3"
+      "braces": "3.0.3",
+      "lodash": "4.17.23"
     }
   }
 }
