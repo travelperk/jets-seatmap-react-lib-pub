@@ -15,7 +15,10 @@
     "build-lib": "rollup -c",
     "prepare": "husky"
   },
-  "files": ["dist", "README.md"],
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "keywords": [
     "react",
     "seatmap",
@@ -99,7 +102,8 @@
       "tar": "7.5.4",
       "trim": "0.0.3",
       "trim-newlines": "3.0.1",
-      "webpack-dev-middleware": "5.3.4"
+      "webpack-dev-middleware": "5.3.4",
+      "elliptic": "6.6.1"
     }
   }
 }
