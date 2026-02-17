@@ -8,6 +8,9 @@ on:
 permissions:
   contents: read
 
+env:
+  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -32,6 +35,9 @@ jobs:
 
       - name: Build lib
         run: pnpm run build-lib
+
+      - name: Set deployment token
+        run: pnpm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
 
       - name: Publish to npm
         run: pnpm publish --access public --no-git-checks
