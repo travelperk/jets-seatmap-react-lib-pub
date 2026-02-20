@@ -245,6 +245,11 @@ describe('JetsSeatMap', () => {
         label: '33A',
         price: 5,
       },
+      {
+        currency: 'EUR',
+        label: '33B',
+        price: 10,
+      },
     ];
 
     const onSeatSelected = jest.fn();
