@@ -355,7 +355,7 @@ interface IConfig {
   units: TUnit;
   apiUrl: string;
   apiAppId: string;
-  apiKey: string | (() => string) | (() => Promise<string>);
+  apiKey: string | (() => string);
   colorTheme: IColorTheme;
 }
 
@@ -405,7 +405,7 @@ The `full config` looks like this:
 
   apiUrl: 'PROVIDED_API_URL',               
   apiAppId: 'PROVIDED_APP_ID',
-  apiKey: 'PROVIDED_API_KEY',                // or a sync/async callback: () => string or () => Promise<string>, for dynamic or refreshed credentials
+  apiKey: 'PROVIDED_API_KEY',                // or a callback: () => string, for dynamic or refreshed credentials
   apiAuthorizationScheme: 'Bearer',            // authorization scheme to be sent in API client requests 'Authorization' header (default: 'Bearer', e.g. 'Authorization: Bearer {apiKey}')
   apiMetadata: {                            // any proprietary data to be passed in the POST request to /flight/features/plane/seatmap (e.g. for custom monitoring)
     'PROPRIETARY_KEY': 'PROPRIETARY_VALUE',

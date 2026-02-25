@@ -68,11 +68,10 @@ export class JetsApiService {
     };
   };
 
-  _resolveApiKey = async () => {
+  _resolveApiKey = () => {
     const key = this._apiKey;
     if (typeof key === 'function') {
-      const result = key();
-      return typeof result?.then === 'function' ? result : Promise.resolve(result);
+      return key();
     }
     return key;
   };
@@ -82,7 +81,7 @@ export class JetsApiService {
 
     if (token) return token;
 
-    const resolvedKey = await this._resolveApiKey();
+    const resolvedKey = this._resolveApiKey();
     const path = `auth?appId=${this._appId}`;
     const { accessToken } = await this.getData(path, this._getAuthRequestOptions(resolvedKey));
 
