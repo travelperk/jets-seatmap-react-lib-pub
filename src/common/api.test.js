@@ -31,9 +31,9 @@ describe('JetsApiService', () => {
       const apiKeyCallback = jest.fn().mockReturnValue('resolved-sync-key');
       const service = new JetsApiService('appId', apiKeyCallback, 'https://api.example.com', null);
 
-      const getDataSpy = jest.spyOn(service, 'getData').mockImplementation(async (url, options = {}) => {
+      const getDataSpy = jest.spyOn(service, 'getData').mockImplementation(async (url) => {
         if (url.startsWith('auth?')) {
-          return { accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHA6OTk5OTk5OTk5OX0.x' };
+          return { accessToken: 'mock-access-token' };
         }
         return {};
       });
@@ -59,7 +59,7 @@ describe('JetsApiService', () => {
 
       const getDataSpy = jest.spyOn(service, 'getData').mockImplementation(async (url) => {
         if (url.startsWith('auth?')) {
-          return { accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHA6OTk5OTk5OTk5OX0.x' };
+          return { accessToken: 'mock-access-token' };
         }
         return {};
       });
