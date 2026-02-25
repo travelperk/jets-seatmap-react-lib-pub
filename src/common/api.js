@@ -68,13 +68,22 @@ export class JetsApiService {
     };
   };
 
+  _resolveApiKey = () => {
+    const key = this._apiKey;
+    if (typeof key === 'function') {
+      return key();
+    }
+    return key;
+  };
+
   _getToken = async () => {
     const token = this._localStorage ? this._localStorage.getData(JWT_TOKEN) : null;
 
     if (token) return token;
 
+    const resolvedKey = this._resolveApiKey();
     const path = `auth?appId=${this._appId}`;
-    const { accessToken } = await this.getData(path, this._getAuthRequestOptions(this._apiKey));
+    const { accessToken } = await this.getData(path, this._getAuthRequestOptions(resolvedKey));
 
     if (!accessToken) {
       throw new Error('Unable to authenticate');
