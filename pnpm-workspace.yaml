@@ -72,4 +72,5 @@ overrides:
   'defu': '6.1.5'
   'handlebars': '4.7.9'
   'path-to-regexp': '0.1.13'
+  'test-exclude': '>=7.0.1'
 
