@@ -45,7 +45,7 @@
     "node": "20.19.6"
   },
   "dependencies": {
-    "dompurify": "^3.3.2"
+    "dompurify": "^3.4.0"
   },
   "peerDependencies": {
     "react": "^18.0.0",
