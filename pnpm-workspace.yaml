@@ -1,12 +1,75 @@
-# legacy-peer-deps=true (closest equivalent in pnpm)
-strictPeerDependencies: false # (this is already pnpm's default)
+disallowWorkspaceCycles: true
+saveExact: true
+autoInstallPeers: true
+sideEffectsCache: false # https://docs.cypress.io/app/get-started/install-cypress#pnpm-configuration
 
-# pnpm controls this via savePrefix; empty string means “save exact” (no ^/~ prefix).
-savePrefix: ''
-nodeLinker: hoisted
+# 28800 minutes = 20 days; this sets the minimum release age to 20 days
+minimumReleaseAge: 28800
+strictDepBuilds: true
+blockExoticSubdeps: true
+resolutionMode: time-based
+engineStrict: true
+verifyStoreIntegrity: true
 
-minimumReleaseAge: 20160 # 20 days
+ignoreScripts: true
+onlyBuiltDependencies: []
+
+trustPolicy: no-downgrade
+trustPolicyExclude:
+  - rollup@2.80.0
+  - '@storybook/react@7.6.21'
+  - 'storybook@7.6.21'
+  - '@storybook/addon-links@7.6.21'
+  - '@storybook/react-webpack5@7.6.21'
+  - 'semver@6.3.1'
+  - '@storybook/addon-docs@7.6.21'
+  - '@storybook/react-dom-shim@7.6.21'
+  - '@storybook/cli@7.6.21'
+  - '@storybook/builder-webpack5@7.6.21'
+  - '@storybook/preset-react-webpack@7.6.21'
+  - '@storybook/addon-actions@7.6.21'
+  - '@storybook/addon-essentials@7.6.21'
+  - '@storybook/addon-interactions@7.6.21'
+  - '@storybook/csf-plugin@7.6.21'
+  - 'serialize-javascript@7.0.3'
+
 minimumReleaseAgeExclude:
-  - 'babel-traverse@6.26.0'
-  - 'lodash@4.17.23'
-  - 'tar@7.5.4'
+  - '@babel/*'
+  - 'debug@4.4.3'
+  - 'styled-components'
+  - 'serialize-javascript@7.0.5'
+  - 'svgo@2.8.1'
+  - 'minimatch@9.0.7'
+  - 'minimatch@10.2.3'
+  - 'sax@1.6.0'
+  - 'tar@7.5.11'
+  - 'flatted@3.4.2'
+
+
+overrides:
+  '@babel/runtime': '7.28.6'
+  '@babel/traverse': '7.28.6'
+  'braces': '3.0.3'
+  'brace-expansion': '5.0.5'
+  'lodash': '4.18.0'
+  'micromatch': '4.0.8'
+  'postcss': '8.5.10'
+  'trim': '0.0.3'
+  'trim-newlines': '3.0.1'
+  'webpack-dev-middleware': '5.3.4'
+  'elliptic': '6.6.1'
+  'minimatch@9': '9.0.7'
+  'minimatch': '10.2.3'
+  'serialize-javascript': '7.0.5'
+  'esbuild': '0.25.0'
+  'ajv': '8.18.0'
+  'ajv@8': '8.18.0'
+  'svgo@2': '2.8.1'
+  'tar': '7.5.11'
+  'flatted': '3.4.2'
+  'picomatch': '4.0.4'
+  'yaml': '2.8.3'
+  'defu': '6.1.5'
+  'handlebars': '4.7.9'
+  'path-to-regexp': '0.1.13'
+
