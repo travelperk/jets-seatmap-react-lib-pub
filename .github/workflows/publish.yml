@@ -34,7 +34,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build lib
-        run: pnpm run build-lib
+        run: just build-lib
 
       - name: Set deployment token
         run: pnpm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
