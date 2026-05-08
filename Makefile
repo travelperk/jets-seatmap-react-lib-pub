@@ -30,7 +30,7 @@ build-storybook:
 
 # Build library with Rollup
 build-lib:
-	rollup -c
+	pnpm exec rollup -c
 
 # Install Git hooks (husky)
 prepare:
