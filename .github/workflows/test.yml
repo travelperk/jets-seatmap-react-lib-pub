@@ -31,7 +31,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Test build-lib
-        run: just build-lib
+        run: make build-lib
 
       - name: Run Jest tests
-        run: just test-ci
+        run: make test-ci
