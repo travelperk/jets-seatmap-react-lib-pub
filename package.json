@@ -4,6 +4,17 @@
   "description": "Jets seatmap react library.",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
+  "scripts": {
+    "test": "jest",
+    "test:unit": "jest --testPathIgnorePatterns='src/.*\\.integration\\.test\\.js$'",
+    "test:integration": "jest --testPathPattern='src/.*\\.integration\\.test\\.js$'",
+    "test:coverage": "jest --coverage --coverageReporters=lcov --coverageReporters=text",
+    "test:ci": "jest --ci --coverage --coverageReporters=text --verbose=false",
+    "dev": "storybook dev -p 6006",
+    "build-storybook": "NODE_OPTIONS=--openssl-legacy-provider storybook build",
+    "build-lib": "rollup -c",
+    "prepare": "husky"
+  },
   "files": [
     "dist",
     "README.md"
