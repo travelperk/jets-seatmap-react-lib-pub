@@ -1,5 +1,5 @@
-name: Test suit
-run-name: Running test suit 🚀
+name: Test suite
+run-name: Running test suite 🚀
 
 on:
   push:
