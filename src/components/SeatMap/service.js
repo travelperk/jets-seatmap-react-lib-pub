@@ -38,6 +38,7 @@ export class JetsSeatMapService {
       bulks,
       availabilityData: planeFeatures?.availabilityData,
       media: planeFeatures?.media,
+      plane: planeFeatures?.plane,
     };
   };
 
