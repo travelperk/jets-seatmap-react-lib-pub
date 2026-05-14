@@ -277,6 +277,7 @@ export const JetsSeatMap = ({
             currentDeckIndex: activeDeck,
             availabilityData: data?.availabilityData,
             media: data?.media,
+            plane: data?.plane,
           });
           hasReceivedFirstParams.current = false;
         }
