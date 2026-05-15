@@ -547,6 +547,18 @@ interface IMediaData {
   panoData: IPanoData[];
 }
 
+interface IPlaneData {
+  id: string;
+  brand: string;
+  model: string;
+  summary: string;
+  name: string;
+  windowSize: string;
+  isWideBody: boolean;
+  seatmapExists: string;
+  noseType: string;
+}
+
 interface IPhotoData {
   file: string;
   thumb: string;
@@ -578,6 +590,7 @@ interface IInitialLayoutData {
   scaleFactor: number;          // scale applied to fit into provided boundaries
   widthInPx: number;            // outer width of the plane. CAUTION: if "horizontal" flag is set - height and width are swapped around to reflect that
   media: IMediaData;            // contains media data for the aircraft cabin
+  plane: IPlaneData;            // contains plane data for the aircraft cabin
   error: string;                // error message if not possible to build a seat map
 }
 ```
